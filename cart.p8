@@ -7,8 +7,10 @@ __lua__
 
 --variables area
 player={
- x=0,
- y=0,
+ x=0, --player cordenate x
+ y=0, --player cordenate y
+ sp=0, --spite number
+ t_idle=0, --time to idle animation
 }
 --init
 
@@ -27,13 +29,22 @@ end
 
 --function draw the player
 function draw_player()
- spr(0,player.x,player.y)
+ spr(player.sp,player.x,player.y)
 end
 function control_player()
- if btnp(0) then player.x -=1 end
- if btnp(1) then player.x +=1 end
- if btnp(2) then player.y -=1 end
- if btnp(3) then player.y +=1 end
+ --idle animation
+ if not btn(0) or not btn(1) or not btn(2) or not btn(3) then
+  player.t_idle +=.2
+  if player.t_idle > 2 then
+   player.sp=1
+   else player.sp=0
+  end
+  if player.t_idle >4 then player.t_idle = 0 end
+ end
+ if btn(0) then player.x -=1 end
+ if btn(1) then player.x +=1 end
+ if btn(2) then player.y -=1 end
+ if btn(3) then player.y +=1 end
 end
 __gfx__
 04444440044444400444444404444444044444440444444404444440000000000000000000000000000000000000000000000000000000000000000000000000
